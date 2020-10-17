@@ -4,7 +4,7 @@
     <el-header>
       <div>
         <img src="../assets/heima.png" alt="" />
-        <span>周博通企业版</span>
+        <span>企业版后台</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button></el-header
     >
