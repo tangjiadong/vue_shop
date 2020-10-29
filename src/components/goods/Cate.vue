@@ -44,7 +44,19 @@
 
     <!-- 添加分类的对话框 -->
     <el-dialog title="添加分类" :visible.sync="addCateDialogVisible" width="50%">
-      <span>这是一段信息</span>
+      <!-- 添加分类表单 -->
+      <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px">
+        <el-form-item label="分类名称" prop="cat_name">
+          <el-input v-model="addCateForm.cat_name"></el-input>
+        </el-form-item>
+        <el-form-item label="父级分类">
+          <!-- options 用来指定数据源 -->
+          <!-- props 用来指定配置对象 -->
+          <el-cascader expand-trigger="hover" :options="parentCateList" :props="cascaderProps" v-model="selectedKeys"
+            @change="parentCateChanged" clearable>
+          </el-cascader>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addCateDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addCateDialogVisible = false">确 定</el-button>
@@ -96,6 +108,31 @@ export default {
       ],
       //控制添加分类对话框的显示与隐藏
       addCateDialogVisible: false,
+      //添加分类的表单数据对象
+      addCateForm: {
+        //将要添加的分类名称
+        cat_name: '',
+        //父级分类id
+        cat_pid: 0,
+        //分类等级,默认要添加的是1级分类
+        cat_level: 0,
+      },
+      //添加分类表单的验证规则对象
+      addCateFormRules: {
+        cat_name: [
+          { required: true, message: '请输入分类名称', trigger: 'blur' },
+        ],
+      },
+      //父级分类列表
+      parentCateList: [],
+      //指定级联选择器的配置对象
+      cascaderProps: {
+        value: 'cat_id',
+        label: 'cat_name',
+        children: 'children',
+      },
+      //选中的父级分类的Id数组
+      selectedKeys: [],
     }
   },
   created() {
@@ -126,8 +163,26 @@ export default {
     },
     //点击按钮,展示添加分类的对话框
     showAddCateDialog() {
+      //先获取父级分类的数据列表
+      this.getParentCateList()
+      //再展示出对话框
       this.addCateDialogVisible = true
     },
+    //获取父级分类的数据列表
+    async getParentCateList() {
+      const { data: res } = await this.$http.get('categories', {
+        params: { type: 2 },
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取父级分类数据失败!')
+      }
+      console.log(res.data)
+      this.parentCateList = res.data
+    },
+    //选择项发生变化触发这个函数
+    parentCateChanged(){
+        console.log(this.selectedKeys)
+    }
   },
 }
 </script>

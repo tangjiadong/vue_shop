@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import {
     Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem, Breadcrumb, BreadcrumbItem,
-    Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select, Option
+    Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Select, Option, Cascader
 } from 'element-ui'
 
 
@@ -31,6 +31,7 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
 //挂载为vue中的组件,之后每个组件中可以使用this.$message
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
