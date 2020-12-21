@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  data() {
+  data() {// data:()=>({})
     return {
       // 登录表单的数据绑定对象
       loginForm: {
