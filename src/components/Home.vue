@@ -4,7 +4,7 @@
     <el-header>
       <div>
         <img src="../assets/heima.png" alt="" />
-        <span>企业版后台</span>
+        <span></span>
       </div>
       <el-button type="info" @click="logout">退出</el-button></el-header
     >
@@ -80,7 +80,6 @@ export default {
         const {data: res} = await this.$http.get('menus')
         if(res.meta.status != 200) return this.$message.error(res.meta.msg)
         this.menuList = res.data
-        console.log(res)
     },
     //点击按钮,切换菜单的折叠和展开
     toggleCollapse(){
